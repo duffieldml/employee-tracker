@@ -26,9 +26,23 @@ CREATE TABLE employee (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE manager (
+  id INT NOT NULL,
+  name VARCHAR(50),
+  title VARCHAR(30),
+  department VARCHAR(30),
+  PRIMARY KEY (id)
+);
+
 SELECT * FROM department;
 SELECT * FROM employee_role;
 SELECT * FROM employee;
+SELECT * FROM manager;
+
+INSERT INTO manager (id, name, title, department) values (2, 'Mark Twain', 'Sales Manager', 'Sales');
+INSERT INTO manager (id, name, title, department) values (4, 'Rex Captain', 'Engineering Manager', 'Engineering');
+INSERT INTO manager (id, name, title, department) values (7, 'Spencer Burley', 'Legal Lead', 'Legal');
+INSERT INTO manager (id, name, title, department) values (10, 'Jeff Flynn', 'Finance Manager', 'Finance');
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id) values (1, 'Jane', 'Austen', 1, 1);
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id) values (2, 'Mark', 'Twain', 2, NULL);
