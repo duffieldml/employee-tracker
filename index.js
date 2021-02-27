@@ -82,7 +82,9 @@ const runSearch = () => {
 const employeeSearch = () => {
         // const query = 'SELECT * FROM employee';
         let query =
-            'SELECT employee.id, employee.first_name, employee.last_name, employee_role.title, manager.name FROM employee LEFT JOIN employee_role ON (employee.id = employee_role.id) left join manager on (employee.manager_id = manager.id)';
+            'SELECT employee.id, employee.first_name, employee.last_name, employee_role.title, manager.name FROM '
+        query +=    
+            'employee LEFT JOIN employee_role ON (employee.id = employee_role.id) left join manager on (employee.manager_id = manager.id)';
         connection.query(query, (err, res) => {
           res.forEach(({ id, first_name, last_name, title, name }) => {
               if (name === null) {
@@ -97,7 +99,10 @@ const employeeSearch = () => {
 };
 
 const rolesSearch = () => {
-    const query = 'SELECT * FROM employee_role';
+    let query = 
+        'SELECT employee_role.id, employee_role.title, employee_role.salary, department.name, FROM ';
+    query +=
+        'employee_role LEFT JOIN department ON ()';
     connection.query(query, (err, res) => {
       res.forEach(({ id, title, salary, department_id }) => {
         console.log(
