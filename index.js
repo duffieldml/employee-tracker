@@ -102,7 +102,7 @@ const rolesSearch = () => {
     let query = 
         'SELECT employee_role.id, employee_role.title, employee_role.salary, department.name, FROM ';
     query +=
-        'employee_role LEFT JOIN department ON ()';
+        'employee_role LEFT JOIN department ON ()'; //This needs to be finished
     connection.query(query, (err, res) => {
       res.forEach(({ id, title, salary, department_id }) => {
         console.log(
