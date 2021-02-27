@@ -33,7 +33,8 @@ const runSearch = () => {
                 'Add Employees',
                 'Add Roles',
                 'Add Deparments',
-                'Update Employee Roles'
+                'Update Employee Roles',
+                'Exit'
             ],
         })
         .then((answer) => {
@@ -66,6 +67,11 @@ const runSearch = () => {
             updateRoles();
             break;
 
+            case 'Exit':
+            console.log('Goodbye!');
+            connection.end();
+            break;
+
             default:
             console.log(`Invalid action: ${answer.action}`);
             break;
@@ -74,15 +80,20 @@ const runSearch = () => {
 };
 
 const employeeSearch = () => {
-        const query = 'SELECT * FROM employee';
+        // const query = 'SELECT * FROM employee';
+        let query =
+            'SELECT employee.id, employee.first_name, employee.last_name, employee_role.title, manager.name FROM employee LEFT JOIN employee_role ON (employee.id = employee_role.id) left join manager on (employee.manager_id = manager.id)';
         connection.query(query, (err, res) => {
-          res.forEach(({ id, first_name, last_name, role_id, manager_id }) => {
+          res.forEach(({ id, first_name, last_name, title, name }) => {
+              if (name === null) {
+                  name = 'I am the manager Karen!'
+              }
             console.log(
-              `ID: ${id} || Name: ${first_name} ${last_name} || Role ID: ${role_id} || Manager ID: ${manager_id}`
+              `ID: ${id} || Name: ${first_name} ${last_name} || Role: ${title} || Manager: ${name}`
             );
           });
+          runSearch();
         });
-        connection.end();
 };
 
 const rolesSearch = () => {
@@ -93,8 +104,8 @@ const rolesSearch = () => {
           `ID: ${id} || title: ${title} || Salary: ${salary} || Department: ${department_id}`
         );
       });
+      runSearch();
     });
-    connection.end();
 };
 
 const departmentsSearch = () => {
@@ -105,6 +116,6 @@ const departmentsSearch = () => {
           `ID: ${id} || Department: ${name}`
         );
       });
+      runSearch();
     });
-    connection.end();
 };
