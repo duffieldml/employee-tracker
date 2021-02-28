@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const { up } = require('inquirer/lib/utils/readline');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -63,8 +64,8 @@ const runSearch = () => {
             addDeparments();
             break;
 
-            case 'Update Employee Rolesnode':
-            updateRoles();
+            case 'Update Employee Roles':
+            updatedRole();
             break;
 
             case 'Exit':
@@ -102,7 +103,7 @@ const rolesSearch = () => {
     let query = 
         'SELECT employee_role.id, employee_role.title, employee_role.salary, department.name FROM ';
     query +=
-        'employee_role LEFT JOIN department ON (employee_role.department_id = department.id)'; //This needs to be finished
+        'employee_role LEFT JOIN department ON (employee_role.department_id = department.id)';
     connection.query(query, (err, res) => {
       res.forEach(({ id, title, salary, name }) => {
         console.log(
@@ -147,8 +148,8 @@ const addDeparments = () => {
               name: answers.department,
             }, (err, res) => {
         console.log(err);
-        console.log('New department has been succesfully added!');
-        runSearch();
+        console.log('New department has been succesfully added! \n');
+        departmentsSearch();
         });
     });
 };
@@ -188,6 +189,7 @@ const addRoles = () => {
             }, (err, res) => {
         console.log(err);
         console.log('New role has been successfully added!');
+        rolesSearch();
         });
     });
 };
@@ -234,6 +236,87 @@ const addEmployees = () => {
         console.log(err);
         console.log('New employee successfully added! Now we will add in a new role for this employee.');
         addRoles();
+        });
+    });
+};
+
+// UPDATE `trackerdb`.`employee` SET `last_name` = '' WHERE (`id` = '2');
+
+// const updateRoles = () => {
+//     connection.query('SELECT * FROM employee_role', (err, res) => {
+//         if (err) throw err;
+//     inquirer.prompt([{
+//         name: 'choice',
+//         type: 'list',
+//         choices() {
+//             const array = [];
+//             res.forEach(({ id }) => {
+//                 array.push(id)
+//             });
+//             return array
+//         },
+//         message: 'What employee would you like to update?',
+//       },
+//       {
+//         name: 'role',
+//         type: 'input',
+//         message: 'What will be the their new title?',   
+//       }
+//     ])
+//       .then((answers) => {
+//         const update = () => {
+//             console.log(answers);
+//             console.log(`Updating ${answers.choice} role.\n`);
+//             const query = connection.query(
+//                 'UPDATE employee_role SET ? where ?',
+//                     {
+//                         id: answers.choice,
+//                     }, 
+//                     {
+//                         title: answers.role,
+//                     }, 
+//                 (err, res) => {
+//                     if (err) throw err;
+//                     console.log(`Role has been successfully updated for ${answers.choice}!`);
+//                     rolesSearch();
+//                 });
+//             };
+//       });
+//     })
+// }
+
+const updatedRole = () => {
+    inquirer
+    .prompt([{
+      name: 'id',
+      type: 'input',
+      message: 'What is the ID of employee you wish to update?',
+    },
+    {
+      name: 'title',
+      type: 'input',
+      message: 'What is their new title?',   
+    },
+    ])
+    .then((answers) => {
+    console.log(answers);
+    const query = connection.query(
+        'UPDATE employee_role SET ? where ?',
+        [
+            {
+                title: answers.title,
+            },
+            {
+                id: answers.id,
+            },
+        ], 
+        (err, res) => {
+            console.log(err);
+            console.log(res);
+            console.log(answers);
+            console.log(query.sql);
+            console.log('You have successfully updated their title');
+            rolesSearch();
         });
     });
 };
