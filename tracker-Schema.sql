@@ -39,10 +39,10 @@ SELECT * FROM employee_role;
 SELECT * FROM employee;
 SELECT * FROM manager;
 
-INSERT INTO manager (id, name, title, department) values (2, 'Mark Twain', 'Sales Manager', 'Sales');
-INSERT INTO manager (id, name, title, department) values (4, 'Rex Captain', 'Engineering Manager', 'Engineering');
-INSERT INTO manager (id, name, title, department) values (7, 'Spencer Burley', 'Legal Lead', 'Legal');
-INSERT INTO manager (id, name, title, department) values (10, 'Jeff Flynn', 'Finance Manager', 'Finance');
+INSERT INTO manager (id, name, title, department) values (1, 'Mark Twain', 'Sales Manager', 'Sales');
+INSERT INTO manager (id, name, title, department) values (2, 'Rex Captain', 'Engineering Manager', 'Engineering');
+INSERT INTO manager (id, name, title, department) values (3, 'Spencer Burley', 'Legal Lead', 'Legal');
+INSERT INTO manager (id, name, title, department) values (4, 'Jeff Flynn', 'Finance Manager', 'Finance');
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id) values (1, 'Jane', 'Austen', 1, 1);
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id) values (2, 'Mark', 'Twain', 2, NULL);
