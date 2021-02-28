@@ -81,7 +81,6 @@ const runSearch = () => {
 };
 
 const employeeSearch = () => {
-        // const query = 'SELECT * FROM employee';
         let query =
             'SELECT employee.id, employee.first_name, employee.last_name, employee_role.title, manager.name FROM '
         query +=    
@@ -101,13 +100,15 @@ const employeeSearch = () => {
 
 const rolesSearch = () => {
     let query = 
-        'SELECT employee_role.id, employee_role.title, employee_role.salary, department.name FROM ';
+        'SELECT employee.first_name, employee.last_name, employee_role.id, employee_role.title, employee_role.salary, department.name FROM ';
     query +=
-        'employee_role LEFT JOIN department ON (employee_role.department_id = department.id)';
+        'employee LEFT JOIN employee_role ON (employee.id = employee_role.id) ';
+    query +=
+        'LEFT JOIN department ON (employee_role.department_id = department.id)';
     connection.query(query, (err, res) => {
-      res.forEach(({ id, title, salary, name }) => {
+      res.forEach(({ first_name, last_name, id, title, salary, name }) => {
         console.log(
-          `ID: ${id} || title: ${title} || Salary: ${salary} || Department: ${name} \n`
+          `Name: ${first_name} ${last_name} || ID: ${id} || Title: ${title} || Salary: ${salary} || Department: ${name} \n`
         );
       });
       runSearch();
@@ -311,8 +312,6 @@ const updatedRole = () => {
             },
         ], 
         (err, res) => {
-            console.log(err);
-            console.log(res);
             console.log(answers);
             console.log(query.sql);
             console.log('You have successfully updated their title');
