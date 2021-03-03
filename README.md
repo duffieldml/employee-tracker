@@ -7,7 +7,7 @@ This is an app to track employees, roles, and departments. It uses node.js, mysq
 
 ## Video & Screenshots
 
-![Video of Completed application](https://drive.google.com/file/d/1TdF1pgw2QoGNy2zY0kS9hx_nka7nX9Ai/view)
+[Video of Completed application](https://drive.google.com/file/d/1TdF1pgw2QoGNy2zY0kS9hx_nka7nX9Ai/view)
 
 ![Add Department Screenshot](./assets/Add_Department.png)
 
@@ -21,7 +21,7 @@ This is an app to track employees, roles, and departments. It uses node.js, mysq
 
 ![View Roles Screenshot](./assets/View_Roles.png)
 
-![Update Role Screenshot](./assets/update_Role.png)
+![Update Role Screenshot](./assets/Update_Role.png)
 
 
 ## Installation
