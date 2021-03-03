@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const { up } = require('inquirer/lib/utils/readline');
+const cTable = require('console.table');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -90,9 +91,14 @@ const employeeSearch = () => {
               if (name === null) {
                   name = 'I am the manager Karen!'
               }
-            console.log(
-              `ID: ${id} || Name: ${first_name} ${last_name} || Job Title: ${title} || Manager: ${name} \n`
-            );
+            console.table([
+              {ID: `${id}`,
+               Name: `${first_name} ${last_name}`,
+               Title: `${title}`,
+               Manager: `${name}`
+              }
+            ]);
+              // `ID: ${id} || Name: ${first_name} ${last_name} || Job Title: ${title} || Manager: ${name} \n`
           });
           runSearch();
         });
@@ -107,9 +113,17 @@ const rolesSearch = () => {
         'LEFT JOIN department ON (employee_role.department_id = department.id)';
     connection.query(query, (err, res) => {
       res.forEach(({ first_name, last_name, id, title, salary, name }) => {
-        console.log(
-          `Name: ${first_name} ${last_name} || ID: ${id} || Title: ${title} || Salary: ${salary} || Department: ${name} \n`
-        );
+        console.table([
+          {ID: `${id}`,
+           Name: `${first_name} ${last_name}`,
+           Title: `${title}`,
+           Salary: `$${salary}`,
+           Manager: `${name}`
+          }
+        ]);
+        // console.log(
+        //   `Name: ${first_name} ${last_name} || ID: ${id} || Title: ${title} || Salary: ${salary} || Department: ${name} \n`
+        // );
       });
       runSearch();
     });
@@ -119,9 +133,14 @@ const departmentsSearch = () => {
     const query = 'SELECT * FROM department';
     connection.query(query, (err, res) => {
       res.forEach(({ id, name }) => {
-        console.log(
-          `ID: ${id} || Department: ${name} \n`
-        );
+        console.table([
+          {ID: `${id}`,
+           department: `${name}`
+          }
+        ]);
+        // console.log(
+        //   `ID: ${id} || Department: ${name} \n`
+        // );
       });
       runSearch();
     });
@@ -240,51 +259,6 @@ const addEmployees = () => {
         });
     });
 };
-
-// UPDATE `trackerdb`.`employee` SET `last_name` = '' WHERE (`id` = '2');
-
-// const updateRoles = () => {
-//     connection.query('SELECT * FROM employee_role', (err, res) => {
-//         if (err) throw err;
-//     inquirer.prompt([{
-//         name: 'choice',
-//         type: 'list',
-//         choices() {
-//             const array = [];
-//             res.forEach(({ id }) => {
-//                 array.push(id)
-//             });
-//             return array
-//         },
-//         message: 'What employee would you like to update?',
-//       },
-//       {
-//         name: 'role',
-//         type: 'input',
-//         message: 'What will be the their new title?',   
-//       }
-//     ])
-//       .then((answers) => {
-//         const update = () => {
-//             console.log(answers);
-//             console.log(`Updating ${answers.choice} role.\n`);
-//             const query = connection.query(
-//                 'UPDATE employee_role SET ? where ?',
-//                     {
-//                         id: answers.choice,
-//                     }, 
-//                     {
-//                         title: answers.role,
-//                     }, 
-//                 (err, res) => {
-//                     if (err) throw err;
-//                     console.log(`Role has been successfully updated for ${answers.choice}!`);
-//                     rolesSearch();
-//                 });
-//             };
-//       });
-//     })
-// }
 
 const updatedRole = () => {
     inquirer
