@@ -118,7 +118,7 @@ const rolesSearch = () => {
            Name: `${first_name} ${last_name}`,
            Title: `${title}`,
            Salary: `$${salary}`,
-           Manager: `${name}`
+           Department: `${name}`
           }
         ]);
         // console.log(
